@@ -170,30 +170,59 @@
     ></script>
     <script src="https://unpkg.com/ethereum-blockies@0.1.1/blockies.min.js"></script>
     <script>
-      async function connectCeloWallet() {
-          if (window.celo) {
-              try {
-                  await window.celo.enable();
+      // async function connectCeloWallet() {
+      //     if (window.celo) {
+      //         try {
+      //             await window.celo.enable();
 
-                  const web3 = new Web3(window.celo);
-                  const kit = new Kit(web3);
+      //             const web3 = new Web3(window.celo);
+      //             const kit = new Kit(web3);
 
-                  const accounts = await kit.web3.eth.getAccounts();
-                  kit.defaultAccount = accounts[0];
+      //             const accounts = await kit.web3.eth.getAccounts();
+      //             kit.defaultAccount = accounts[0];
 
-                  const balance = await kit.getTotalBalance(kit.defaultAccount);
-                  document.getElementById('balance').textContent = balance.cUSD.shiftedBy(-18).toFixed(2) + ' cUSD';
+      //             const balance = await kit.getTotalBalance(kit.defaultAccount);
+      //             document.getElementById('balance').textContent = balance.cUSD.shiftedBy(-18).toFixed(2) + ' cUSD';
 
-                  console.log('Wallet connected');
-              } catch (error) {
-                  console.error('Error connecting to Celo:', error);
-              }
-          } else {
-              console.log('Celo extension not found');
-          }
-      }
+      //             console.log('Wallet connected');
+      //         } catch (error) {
+      //             console.error('Error connecting to Celo:', error);
+      //         }
+      //     } else {
+      //         console.log('Celo extension not found');
+      //     }
+      // }
 
-      document.getElementById('connectWallet').addEventListener('click', connectCeloWallet);
+      // document.getElementById('connectWallet').addEventListener('click', connectCeloWallet);
+      document.getElementById('connectButton').addEventListener('click', connectCeloWallet);
+
+async function connectCeloWallet() {
+    try {
+        if (!window.ethereum) {
+            throw new Error('No crypto wallet found. Please install it.');
+        }
+
+        await ethereum.request({ method: 'eth_requestAccounts' });
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        
+        console.log("Connected to account:", await signer.getAddress());
+
+        // Example: Interacting with a contract
+        const marketplaceAddress = 'your-marketplace-contract-address'; // Replace with your contract address
+        const marketplaceABI = [ /* Your contract ABI here */ ];
+        
+        const marketplaceContract = new ethers.Contract(marketplaceAddress, marketplaceABI, signer);
+
+        // Now you can call functions on your contract
+        console.log("Marketplace Contract:", marketplaceContract);
+
+    } catch (error) {
+        console.error("Error connecting to Celo:", error);
+    }
+}
+
   </script>
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
   </body>
 </html>
