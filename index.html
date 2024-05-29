@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
+
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -47,11 +49,12 @@
 
   <body>
     <div class="container mt-2" style="max-width: 72em">
-
       <nav class="navbar bg-white navbar-light">
         <div class="container-fluid">
           <span class="navbar-brand m-0 h4 fw-bold">X-wave ?POE</span>
-          <button id="connectWallet" class="btn btn-primary">Connect Celo Wallet</button>
+          <button id="connectWallet" class="btn btn-primary">
+            Connect Celo Wallet
+          </button>
           <span class="nav-link border rounded-pill bg-light">
             <span id="balance">0</span>
             cUSD
@@ -62,7 +65,7 @@
       <div class="alert alert-warning sticky-top mt-2" role="alert">
         <span id="notification">⌛ Loading...</span>
       </div>
-  
+
       <div class="mb-4" style="margin-top: 4em">
         <a
           class="btn btn-dark rounded-pill"
@@ -76,7 +79,7 @@
       <main id="marketplace" class="row"></main>
     </div>
 
-<!--Modal-->
+    <!--Modal-->
     <div
       class="modal fade"
       id="addModal"
@@ -161,12 +164,12 @@
         </div>
       </div>
     </div>
-<!--/Modal-->
+    <!--/Modal-->
 
     <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-    crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+      crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/ethereum-blockies@0.1.1/blockies.min.js"></script>
     <script>
@@ -194,46 +197,61 @@
       // }
 
       // document.getElementById('connectWallet').addEventListener('click', connectCeloWallet);
-    
-async function connectCeloWallet() {
-    try {
+
+      async function connectCeloWallet() {
+
         if (!window.ethereum) {
-            throw new Error('No crypto wallet found. Please install it.');
+          throw new Error("No crypto wallet found. Please install it.");
+          return;
         }
 
-        await ethereum.request({ method: 'eth_requestAccounts' });
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        
-        console.log("Connected to account:", await signer.getAddress());
+        try {
+          await window.ethereum.request({ method: "eth_requestAccounts" });
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const signer = provider.getSigner();
 
-        // Example: Interacting with a contract
-        const marketplaceAddress = '0x7E0efb852B65d4bD3856fdC250fed80523eDC329'; // Replace with your contract address
-        const marketplaceABI = fetch('contract\marketplace.abi.json')
-          .then(response => response.json())
-          .then(data => {
-            // Use the data from the JSON file
-            console.log(data);
-            // Return the ABI array
-            return data;
-          })
-          .catch(error => {
-            console.error('Error fetching JSON file:', error);
-          });
-        
-        const marketplaceContract = new ethers.Contract(marketplaceAddress, marketplaceABI, signer);
+          console.log("Connected to account:", await signer.getAddress());
 
-        // Now you can call functions on your contract
-        console.log("Marketplace Contract:", marketplaceContract);
+          const marketplaceABI = await fetch('contract/marketplace.abi.json')
+            .then(response => response.json());
 
-    } catch (error) {
-        console.log("Error connecting to Celo:", error);
-    }
-}
+          // Example: Interacting with a contract
+          const marketplaceAddress =
+            "0x7E0efb852B65d4bD3856fdC250fed80523eDC329"; // Replace with your contract address
+            const marketplaceContract = new ethers.Contract(marketplaceAddress, marketplaceABI, signer);
+          // const marketplaceABI = fetch("contract\marketplace.abi.json")
+          //   .then((response) => response.json())
+          //   .then((data) => {
+          //     // Use the data from the JSON file
+          //     console.log(data);
+          //     // Return the ABI array
+          //     return data;
+          //   })
+          //   .catch((error) => {
+          //     console.error("Error fetching JSON file:", error);
+          //   });
 
-document.getElementById('connectButton').addEventListener('click', connectCeloWallet);
+          // const marketplaceContract = new ethers.Contract(
+          //   marketplaceAddress,
+          //   marketplaceABI,
+          //   signer
+          // );
 
-  </script>
-  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+          // Now you can call functions on your contract
+          console.log("Marketplace Contract:", marketplaceContract);
+        } catch (error) {
+          onsole.error("Error connecting to Celo:", error);
+        alert('Failed to connect to Celo Wallet. Check the console for more details.');
+        }
+      }
+
+      document
+        .getElementById("connectButton")
+        .addEventListener("click", connectCeloWallet);
+    </script>
+    <script
+      src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+      type="application/javascript"
+    ></script>
   </body>
 </html>
