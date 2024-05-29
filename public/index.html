@@ -42,7 +42,7 @@
       }
     </style>
 
-    <title>Street Food Kigali</title>
+    <title>X-wave ?POE</title>
   </head>
 
   <body>
@@ -51,6 +51,7 @@
       <nav class="navbar bg-white navbar-light">
         <div class="container-fluid">
           <span class="navbar-brand m-0 h4 fw-bold">X-wave ?POE</span>
+          <button id="connectWallet" class="btn btn-primary">Connect Celo Wallet</button>
           <span class="nav-link border rounded-pill bg-light">
             <span id="balance">0</span>
             cUSD
@@ -168,5 +169,31 @@
     crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/ethereum-blockies@0.1.1/blockies.min.js"></script>
+    <script>
+      async function connectCeloWallet() {
+          if (window.celo) {
+              try {
+                  await window.celo.enable();
+
+                  const web3 = new Web3(window.celo);
+                  const kit = new Kit(web3);
+
+                  const accounts = await kit.web3.eth.getAccounts();
+                  kit.defaultAccount = accounts[0];
+
+                  const balance = await kit.getTotalBalance(kit.defaultAccount);
+                  document.getElementById('balance').textContent = balance.cUSD.shiftedBy(-18).toFixed(2) + ' cUSD';
+
+                  console.log('Wallet connected');
+              } catch (error) {
+                  console.error('Error connecting to Celo:', error);
+              }
+          } else {
+              console.log('Celo extension not found');
+          }
+      }
+
+      document.getElementById('connectWallet').addEventListener('click', connectCeloWallet);
+  </script>
   </body>
 </html>
