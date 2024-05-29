@@ -1,4 +1,5 @@
 {
+  "homepage": "http://argusham.github.io/xwave",
   "main": "index.js",
   "dependencies": {
     "@celo/contractkit": "^8.0.0",
@@ -32,6 +33,7 @@
     "chai": "^4.2.0",
     "ethers": "^6.4.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
+    "gh-pages": "^6.1.1",
     "hardhat": "^2.22.4",
     "hardhat-gas-reporter": "^1.0.8",
     "html-webpack-plugin": "^5.6.0",
@@ -44,6 +46,8 @@
   "scripts": {
     "dev": "node index.js",
     "build": "webpack",
-    "start": "webpack serve --config webpack.config.js"
+    "start": "webpack serve --config webpack.config.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   }
 }
