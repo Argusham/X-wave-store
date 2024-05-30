@@ -98,7 +98,9 @@ module.exports = {
     publicPath: "/",
     filename: "[name].bundle.js"
   },
-
+  externals: {
+    express: 'commonjs express'
+  },
   resolve: {
     fallback: {
       "crypto": require.resolve("crypto-browserify"),

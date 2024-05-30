@@ -1,9 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
+
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://unpkg.com/ethereum-blockies@0.1.1/blockies.min.js"></script>
+  <script>
+    async function connectCeloWallet() {
+        if (window.celo) {
+            try {
+                await window.celo.enable();
+
+                const web3 = new Web3(window.celo);
+                const kit = new Kit(web3);
+
+                const accounts = await kit.web3.eth.getAccounts();
+                kit.defaultAccount = accounts[0];
+
+                const balance = await kit.getTotalBalance(kit.defaultAccount);
+                document.getElementById('balance').textContent = balance.cUSD.shiftedBy(-18).toFixed(2) + ' cUSD';
+
+                console.log('Wallet connected');
+            } catch (error) {
+                console.error('Error connecting to Celo:', error);
+            }
+        } else {
+            console.log('Celo extension not found');
+        }
+    }
+
+    document.getElementById('connectWallet').addEventListener('click', connectCeloWallet);
+  </script>
+  <script
+    src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+    type="application/javascript"
+  ></script>
 
     <!-- CSS -->
     <link
@@ -47,11 +86,12 @@
 
   <body>
     <div class="container mt-2" style="max-width: 72em">
-
       <nav class="navbar bg-white navbar-light">
         <div class="container-fluid">
           <span class="navbar-brand m-0 h4 fw-bold">X-wave ?POE</span>
-          <button id="connectWallet" class="btn btn-primary">Connect Celo Wallet</button>
+          <button id="connectWallet" class="btn btn-primary">
+            Connect Celo Wallet
+          </button>
           <span class="nav-link border rounded-pill bg-light">
             <span id="balance">0</span>
             cUSD
@@ -62,7 +102,7 @@
       <div class="alert alert-warning sticky-top mt-2" role="alert">
         <span id="notification">⌛ Loading...</span>
       </div>
-  
+
       <div class="mb-4" style="margin-top: 4em">
         <a
           class="btn btn-dark rounded-pill"
@@ -76,7 +116,7 @@
       <main id="marketplace" class="row"></main>
     </div>
 
-<!--Modal-->
+    <!--Modal-->
     <div
       class="modal fade"
       id="addModal"
@@ -161,39 +201,6 @@
         </div>
       </div>
     </div>
-<!--/Modal-->
-
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-    crossorigin="anonymous"
-    ></script>
-    <script src="https://unpkg.com/ethereum-blockies@0.1.1/blockies.min.js"></script>
-    <script>
-      async function connectCeloWallet() {
-          if (window.celo) {
-              try {
-                  await window.celo.enable();
-
-                  const web3 = new Web3(window.celo);
-                  const kit = new Kit(web3);
-
-                  const accounts = await kit.web3.eth.getAccounts();
-                  kit.defaultAccount = accounts[0];
-
-                  const balance = await kit.getTotalBalance(kit.defaultAccount);
-                  document.getElementById('balance').textContent = balance.cUSD.shiftedBy(-18).toFixed(2) + ' cUSD';
-
-                  console.log('Wallet connected');
-              } catch (error) {
-                  console.error('Error connecting to Celo:', error);
-              }
-          } else {
-              console.log('Celo extension not found');
-          }
-      }
-
-      document.getElementById('connectWallet').addEventListener('click', connectCeloWallet);
-  </script>
+    <!--/Modal-->
   </body>
 </html>
