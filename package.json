@@ -46,7 +46,7 @@
     "webpack-dev-server": "^5.0.4"
   },
   "scripts": {
-    "dev": "node serve.js",
+    "dev": "node server.js",
     "build": "webpack",
     "start": "webpack serve --config webpack.config.js",
     "predeploy": "npm run build",
