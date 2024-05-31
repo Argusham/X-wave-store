@@ -85,36 +85,102 @@ function renderProducts() {
   })
 }
 
+// function productTemplate(_product) {
+//   return `
+//     <div class="card mb-4">
+//       <img class="card-img-top" src="${_product.image}" alt="...">
+//       <div class="position-absolute top-0 end-0 bg-warning mt-4 px-2 py-1 rounded-start">
+//         ${_product.sold} Sold
+//       </div>
+//       <div class="card-body text-left p-4 position-relative">
+//         <div class="translate-middle-y position-absolute top-0">
+//         ${identiconTemplate(_product.owner)}
+//         </div>
+//         <h2 class="card-title fs-4 fw-bold mt-2">${_product.name}</h2>
+//         <p class="card-text mb-4" style="min-height: 82px">
+//           ${_product.description}             
+//         </p>
+//         <p class="card-text mt-4">
+//           <i class="bi bi-geo-alt-fill"></i>
+//           <span>${_product.location}</span>
+//         </p>
+//         <div class="d-grid gap-2">
+//           <a class="btn btn-lg btn-outline-dark buyBtn fs-6 p-3" id=${
+//             _product.index
+//           }>
+//             Buy for ${_product.price.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD
+//           </a>
+//         </div>
+//       </div>
+//     </div>
+//   `
+// }
+
+
+// function productTemplate(_product) {
+//   return `
+//     <div class="card mb-4 shadow-lg border-0 rounded-lg overflow-hidden" style="background-color: #f0f0f0;">
+//       <div style="position: relative;">
+//         <img class="card-img-top" src="${_product.image}" alt="Product Image" style="object-fit: cover; height: 200px;">
+//         <div class="position-absolute top-0 end-0 bg-secondary text-light mt-4 px-2 py-1 rounded-start">
+//           ${_product.sold} Sold
+//         </div>
+//       </div>
+//       <div class="card-body p-4">
+//         <div class="d-flex align-items-center mb-3">
+//           <div class="me-3">
+//             ${identiconTemplate(_product.owner)}
+//           </div>
+//           <h2 class="card-title fs-5 fw-bold text-dark mb-0">${_product.name}</h2>
+//         </div>
+//         <p class="card-text text-muted mb-3" style="min-height: 82px;">
+//           ${_product.description}
+//         </p>
+//         <div class="d-flex justify-content-between align-items-center">
+//           <p class="card-text text-muted mb-0">
+//             <i class="bi bi-geo-alt-fill"></i>
+//             <span>${_product.location}</span>
+//           </p>
+//           <a class="btn btn-sm btn-primary buyBtn" id="${_product.index}">
+//             Buy for ${_product.price.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD
+//           </a>
+//         </div>
+//       </div>
+//     </div>
+//   `;
+// }
+
 function productTemplate(_product) {
   return `
-    <div class="card mb-4">
-      <img class="card-img-top" src="${_product.image}" alt="...">
-      <div class="position-absolute top-0 end-0 bg-warning mt-4 px-2 py-1 rounded-start">
-        ${_product.sold} Sold
+    <div class="card mb-4 shadow-lg border-0 rounded-lg overflow-hidden" style="background-color: #f0f0f0;">
+      <div style="position: relative;">
+        <img class="card-img-top" src="${_product.image}" alt="Product Image" style="object-fit: cover; height: 200px;">
       </div>
-      <div class="card-body text-left p-4 position-relative">
-        <div class="translate-middle-y position-absolute top-0">
-        ${identiconTemplate(_product.owner)}
+      <div class="card-body p-4">
+        <div class="d-flex align-items-center mb-3">
+          <div class="me-3">
+            ${identiconTemplate(_product.owner)}
+          </div>
+          <h2 class="card-title fs-5 fw-bold text-dark mb-0 me-auto">${_product.name}</h2>
+          <span class="badge bg-secondary text-light">${_product.sold} Sold</span>
         </div>
-        <h2 class="card-title fs-4 fw-bold mt-2">${_product.name}</h2>
-        <p class="card-text mb-4" style="min-height: 82px">
-          ${_product.description}             
+        <p class="card-text text-muted mb-3" style="min-height: 82px;">
+          ${_product.description}
         </p>
-        <p class="card-text mt-4">
-          <i class="bi bi-geo-alt-fill"></i>
-          <span>${_product.location}</span>
-        </p>
-        <div class="d-grid gap-2">
-          <a class="btn btn-lg btn-outline-dark buyBtn fs-6 p-3" id=${
-            _product.index
-          }>
+        <div class="d-flex justify-content-between align-items-center">
+          <p class="card-text text-muted mb-0">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span>${_product.location}</span>
+          </p>
+          <a class="btn btn-sm btn-primary buyBtn" id="${_product.index}">
             Buy for ${_product.price.shiftedBy(-ERC20_DECIMALS).toFixed(2)} cUSD
           </a>
         </div>
       </div>
     </div>
-  `
+  `;
 }
+
 
 function identiconTemplate(_address) {
   const icon = blockies
@@ -129,7 +195,7 @@ function identiconTemplate(_address) {
   <div class="rounded-circle overflow-hidden d-inline-block border border-white border-2 shadow-sm m-0">
     <a href="https://alfajores-blockscout.celo-testnet.org/address/${_address}/transactions"
         target="_blank">
-        <img src="${icon}" width="48" alt="${_address}">
+        <img src="${icon}" width="38" alt="${_address}">
     </a>
   </div>
   `

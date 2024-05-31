@@ -1,209 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    
 
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <script src="https://cdn.jsdelivr.net/npm/web3@4.9.0/dist/web3.min.js" async></script>
 
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-    crossorigin="anonymous"
-  ></script>
-  <script src="https://unpkg.com/ethereum-blockies@0.1.1/blockies.min.js"></script>
-  <!-- <script>
-    async function connectCeloWallet() {
-        if (window.celo) {
-            try {
-                await window.celo.enable();
-
-                const web3 = new Web3(window.celo);
-                const kit = new Kit(web3);
-
-                const accounts = await kit.web3.eth.getAccounts();
-                kit.defaultAccount = accounts[0];
-
-                const balance = await kit.getTotalBalance(kit.defaultAccount);
-                document.getElementById('balance').textContent = balance.cUSD.shiftedBy(-18).toFixed(2) + ' cUSD';
-
-                console.log('Wallet connected');
-            } catch (error) {
-                console.error('Error connecting to Celo:', error);
-            }
-        } else {
-            console.log('Celo extension not found');
-        }
-    }
-
-    document.getElementById('connectWallet').addEventListener('click', connectCeloWallet);
-  </script> -->
-  <script
-    src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
-    type="application/javascript"
-  ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/ethereum-blockies@0.1.1/blockies.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
 
     <!-- CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
     <style>
-      :root {
-        --bs-font-sans-serif: "DM Sans", sans-serif;
-      }
+        :root {
+            --bs-font-sans-serif: "DM Sans", sans-serif;
+            --primary-color: #ffb703;
+            --secondary-color: #fb8500;
+            --accent-color: #023047;
+            --background-color: #8ecae6;
+            --text-color: #219ebc;
+        }
 
-      @media (min-width: 576px) {
+        body {
+            font-family: var(--bs-font-sans-serif);
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .alert-warning {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--accent-color);
+        }
+
+        .modal-header,
+        .modal-footer {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+        }
+
+        .btn-dark {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-light {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-light:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
         .card {
-          border: 0;
-          box-shadow: rgb(0 0 0 / 5%) 0px 10px 20px;
-          border-radius: 10px;
+            border: 0;
+            box-shadow: rgb(0 0 0 / 5%) 0px 10px 20px;
+            border-radius: 10px;
         }
 
         .card-img-top {
-          width: 100%;
-          height: 20vw;
-          object-fit: cover;
+            width: 100%;
+            height: 20vw;
+            object-fit: cover;
         }
-      }
+
+        .header-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 5px solid var(--secondary-color);
+        }
+
+        .navbar-brand img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            color: var(--accent-color);
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
     </style>
 
-    <title>X-wave ?POE</title>
-  </head>
+    <title>Kaapse Kos</title>
+</head>
 
-  <body>
+<body>
     <div class="container mt-2" style="max-width: 72em">
-      <nav class="navbar bg-white navbar-light">
-        <div class="container-fluid">
-          <span class="navbar-brand m-0 h4 fw-bold">X-wave ?POE</span>
-          <!-- <button id="connectWallet" class="btn btn-primary">
-            Connect Celo Wallet
-          </button> -->
-          <span class="nav-link border rounded-pill bg-light">
-            <span id="balance">0</span>
-            cUSD
-          </span>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxIQEhAREhMRFhUWEBMQGBAQEhUVEBUWFhUXGBUWGxcYISogHBomHxUXIT0hJikrLi4uGSAzOzMsNygtLisBCgoKDg0OGxAQGislICUtLS0vKysvLy0vMC0tLS0tLS0vMC0tLTUtKy0tLS0tLTAtLS0tLS0tLS0vLS0vLS0tLf/AABEIALcBEwMBEQACEQEDEQH/xAAcAAEAAgIDAQAAAAAAAAAAAAAABgcCBQEDBAj/xABEEAABAwAHAgcPAwIGAwAAAAABAAIDBAYREiExYQVBFlFTVHGT0QcTFBciIzJCYnKBkZLS01KhwUOxM2OCsuHwJIOi/8QAGwEBAAIDAQEAAAAAAAAAAAAAAAUGAQMEAgf/xAAwEQEAAQMBBQgCAQUBAQAAAAAAAQIDBBEFISJR0RITFTFBUpGhFHHwgZKxweFh8f/aAAwDAQACEQMRAD8AiZK8qmWowWoFqCS1WrnPQSGGyWG3GJ+bfcd6vRlpvTXR24+ZXa3Tvhb9X9vUWnMvwlpIAvROAErOlv8AItGqzqmrV+i7GtMvbtDZkM7DHLG1zTuIsIPGCMQdQsVUxVGkuq1ertVduidJVtWWo8tHtkgvSxZltlszBqB6Q1GOm9cF3GmnfTvhZsPa9F3hu8NXP0noiIK5kwICAgICAgICAgICAgICAgICAgICAgICAgIMgg0ZUw+ICAgICDuodLkhe2SJ7mPabQ9hscP+NN6w90V1UTrTOi0ap90pkl2Km3WOyFIAsid749Q65e6vWvNMY+fFXDc3Tz9FiMcHAEEEEWgjEEcaykfNF6zVLhpV6SOyKbO8B5t59po3+0MeO1c93Hpr3xulK4W1Lljhq4qeXL9dFZbU2ZLRX97mYWu3HNrhxtdkR/02KProqonSVosZNu/T2rc6/wCY/bxry3CAgICAgICAgICAgICAgICAgICAgICAgyCDRlTD4iIwICAgICCRVWrjSKAQ1p75DbjA8mwe4fVP7aI7MfMrtbvOFw1crNR6e22F3lAWuhfhKzpG8ai0L1qm7ORRdjWlsNo7PipDDHKxr2nccweMHMHULzVTFUaS6rV6u1V2qJ0lWdZajy0e2SC9LFmW2WysGoHpDUY6b1wXcaad9O+Fmwtr0XeG7wzz9J6IkCuVMCyCAgICAgICAgICAgICAgICAgICAgIMgg9W3KqPjtfBa9mZZnI37h+/TmvGFtii5w3d08/Sej5jtDYddrjs76eXrHVGSppX5gWWBAQEBAQdlGpD43NfG5zXNNrXsJDgdCFh6pqmmdY81nVT7pYddiptgOAFJaPJPvtHo+8MNAvWqXx9oRPDc+VkRSNeA5pBBFoc02tIORBGYWUnE670YrNUqGlXpI7IpjjeA828+00b/aGPHaue7j01743SlcPalyxpTVvp5cv10VltTZktGf3uZha7cc2uHG12RH/TYo+uiqidKlosZFu/T2rc6/5eNeW4QEBAQEBAQEBAQEBAQEBAQEBAQEGQQTygU6KkRtlhe17HZPabR0aHQ4hVa7artV9iuNJQFFdNca0tXtyrUdIte2xkn6gPJd7w/kY9KkMLatzH4auKn7j9IraGx7WTx08NX1P7QXaGz5IHXJGlp3H1XDjB3hWnHybd+ntW51/0puTi3cersXI0/no8q6HMICAgICAg31WK20igGyM34rbTA8m4eMtPqHUfEFHXj5ddrd5xyXFVqtdHp7fNuuyAWugfYJBqP1N1HxsyWYlN2Mii9HD8NltLZ8VIYY5WNe07jmDxg5g6hYqpiqNJddq9Xaq7VE6SrSstR5aPbJBelizIstmYNQPSGox03rgu40076d8LNh7Xou6U3d1XP0noiQK5kwICAgICAgICAgICAgICAgICAgIMggrTYFYqRQZL8D7LfSjdjE8e03+RYRxqSycW1kU9m5HWFBt3arc60yueqVeKPTwGf4U/IPI8rC0ljvWGmem9VPO2XdxuKN9PPql7GXTc3TulIaZRGTNLJGhzTuO7UHMHULgs3q7NXbonSW2/j271HYuRrCEbcqs+G18Vr487P6jRqBmNR8laMLa9u9w3OGr6lUNobEuWda7XFT9wjqmUEIwICAgICDOCZzHNexzmuabQ5pIcDxgjELD1TVNM6wsqqfdL9GKm9ApLR/vaP9w+W9ZiUtj7Q14bnz1WZBO2RrXsc1zXC0PaQWkcYIzXpKRMTGsIzWapcVKvSR2RSnG8B5t59po3+0Melc93Hpr3xulK4W1LljSmrip5dFY7U2ZLRn97mYWu3b2uHG05Ef8ATYo+uiqidKlosZFu/T2rc6/5j9vIvLcICAgICAgICAgICAgICAgICDIIKecpp89cteQQQSCDaCMC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"
+                        alt="SA Flag">
+                        Kaapse Kos
+                </a>
+                <button id="connectWalletBtn" class="btn btn-primary ms-3">Connect Wallet</button>
+                <span class="nav-link border rounded-pill bg-light">
+                    <span id="balance">0</span>
+                    cUSD
+                </span>
+            </div>
+        </nav>
+
+        <div class="alert alert-warning sticky-top mt-2" role="alert">
+            <span id="notification">⌛ Loading...</span>
         </div>
-      </nav>
 
-      <div class="alert alert-warning sticky-top mt-2" role="alert">
-        <span id="notification">⌛ Loading...</span>
-      </div>
+        <div class="mb-4" style="margin-top: 4em">
+            <a class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#addModal">
+                <i class="fas fa-plus-circle"></i> Add Product
+            </a>
+        </div>
 
-      <div class="mb-4" style="margin-top: 4em">
-        <a
-          class="btn btn-dark rounded-pill"
-          data-bs-toggle="modal"
-          data-bs-target="#addModal"
-        >
-          Add product
-        </a>
-      </div>
-
-      <main id="marketplace" class="row"></main>
+        <main id="marketplace" class="row"></main>
     </div>
 
     <!--Modal-->
-    <div
-      class="modal fade"
-      id="addModal"
-      tabindex="-1"
-      aria-labelledby="newProductModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="newProductModalLabel">New Product</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-row">
-                <div class="col">
-                  <input
-                    type="text"
-                    id="newProductName"
-                    class="form-control mb-2"
-                    placeholder="Enter name of product"
-                  />
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="newProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newProductModalLabel">New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="col">
-                  <input
-                    type="text"
-                    id="newImgUrl"
-                    class="form-control mb-2"
-                    placeholder="Enter image url"
-                  />
+                <div class="modal-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" id="newProductName" class="form-control mb-2"
+                                    placeholder="Enter name of product" />
+                            </div>
+                            <div class="col">
+                                <input type="text" id="newImgUrl" class="form-control mb-2"
+                                    placeholder="Enter image url" />
+                            </div>
+                            <div class="col">
+                                <input type="text" id="newProductDescription" class="form-control mb-2"
+                                    placeholder="Enter product description" />
+                            </div>
+                            <div class="col">
+                                <input type="text" id="newLocation" class="form-control mb-2"
+                                    placeholder="Enter location" />
+                            </div>
+                            <div class="col">
+                                <input type="text" id="newPrice" class="form-control mb-2" placeholder="Enter price" />
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="col">
-                  <input
-                    type="text"
-                    id="newProductDescription"
-                    class="form-control mb-2"
-                    placeholder="Enter product description"
-                  />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="newProductBtn">Add
+                        Product</button>
                 </div>
-                <div class="col">
-                  <input
-                    type="text"
-                    id="newLocation"
-                    class="form-control mb-2"
-                    placeholder="Enter location"
-                  />
-                </div>
-                <div class="col">
-                  <input
-                    type="text"
-                    id="newPrice"
-                    class="form-control mb-2"
-                    placeholder="Enter price"
-                  />
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-light border"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              class="btn btn-dark"
-              data-bs-dismiss="modal"
-              id="newProductBtn"
-            >
-              Add product
-            </button>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
     <!--/Modal-->
-    
-  </body>
+</body>
+
 </html>
