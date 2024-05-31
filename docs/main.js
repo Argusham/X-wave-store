@@ -35,14 +35,14 @@ const connectCeloWallet = async function () {
   // } else {
   //   notification("⚠️ Please install the CeloExtensionWallet.")
   // }
-  if (window.celo) {
-    web3 = new Web3(window.celo);
+  if (window.ethereum) {
+    web3 = new Web3(window.ethereum);
     try {
-        window.celo.request({ method: 'eth_requestAccounts' })
+        window.ethereum.request({ method: 'eth_requestAccounts' })
             .then((accounts) => {
                 console.log('Wallet connected:', accounts[0]);
                 // Initialize the contract after successfully connecting to the wallet
-                contract = new web3.eth.Contract(abi, contractAddress);
+                contract = new web3.eth.Contract(marketplaceAbi, MPContractAddress);
                 // Now you can enable UI elements or further interactions
             })
             .catch((error) => {
