@@ -13,27 +13,47 @@ let kit
 let contract
 let products = []
 
+let web3;
 
 const connectCeloWallet = async function () {
+  // if (window.celo) {
+  //   notification("⚠️ Please approve this DApp to use it.")
+  //   try {
+  //     await window.celo.enable()
+  //     notificationOff()
+
+  //     const web3 = new Web3(window.celo)
+  //     kit = newKitFromWeb3(web3)
+
+  //     const accounts = await kit.web3.eth.getAccounts()
+  //     kit.defaultAccount = accounts[0]
+
+  //     contract = new kit.web3.eth.Contract(marketplaceAbi, MPContractAddress)
+  //   } catch (error) {
+  //     notification(`⚠️ ${error}.`)
+  //   }
+  // } else {
+  //   notification("⚠️ Please install the CeloExtensionWallet.")
+  // }
   if (window.celo) {
-    notification("⚠️ Please approve this DApp to use it.")
+    web3 = new Web3(window.celo);
     try {
-      await window.celo.enable()
-      notificationOff()
-
-      const web3 = new Web3(window.celo)
-      kit = newKitFromWeb3(web3)
-
-      const accounts = await kit.web3.eth.getAccounts()
-      kit.defaultAccount = accounts[0]
-
-      contract = new kit.web3.eth.Contract(marketplaceAbi, MPContractAddress)
+        window.celo.request({ method: 'eth_requestAccounts' })
+            .then((accounts) => {
+                console.log('Wallet connected:', accounts[0]);
+                // Initialize the contract after successfully connecting to the wallet
+                contract = new web3.eth.Contract(abi, contractAddress);
+                // Now you can enable UI elements or further interactions
+            })
+            .catch((error) => {
+                console.error('Wallet connection error:', error);
+            });
     } catch (error) {
-      notification(`⚠️ ${error}.`)
+        console.error('Error during web3 initialization:', error);
     }
-  } else {
-    notification("⚠️ Please install the CeloExtensionWallet.")
-  }
+} else {
+    console.error('No web3 provider detected. Please install MetaMask or Celo Wallet.');
+}
 }
 
 const getProducts = async function() {
