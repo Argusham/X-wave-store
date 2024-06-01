@@ -10,7 +10,6 @@ const ERC20_DECIMALS = 18
 const MPContractAddress = "0x7E0efb852B65d4bD3856fdC250fed80523eDC329"
 const cUSDContractAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1"
 let kit
-let web3;
 let contract
 let products = []
 
