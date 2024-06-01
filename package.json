@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@types/json-schema/package.json",
   "homepage": "http://argusham.github.io/xwave",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "@celo/contractkit": "^8.0.0",
     "assert": "^2.1.0",
